@@ -19,3 +19,7 @@ Project resource links:
 
 - 🎨 [Figma design for News Explorer](figma.com/file/3ottwMEhlBt95Dbn8dw1NH/Your-Final-Project?type=design&node-id=0-1&mode=design&t=n8iPbRbVKSAS2dCI-0)
 - 🔤 [Fonts for News Explorer](https://code.s3.yandex.net/web-developer/diploma/final-project_fonts_latin.zip)
+
+## Backend repository
+
+- https://github.com/d-weimer/news-explorer-backend
