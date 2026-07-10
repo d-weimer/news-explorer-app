@@ -1,0 +1,76 @@
+.header {
+  width: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header__container {
+  max-width: 1440px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 0 104px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+}
+
+.header__home {
+  width: max-content;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  color: #ffffff;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.header__sign-in-button {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 100px;
+  width: 152px;
+  height: 48px;
+  padding: 12px 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.header__sign-in-button:hover {
+  opacity: 0.8;
+}
+
+.header__link_active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background-color: #ffffff;
+}
+
+.header__home.header__link_active::after {
+  left: -9.5px;
+  right: -9.5px;
+}
