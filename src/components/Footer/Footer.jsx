@@ -15,7 +15,7 @@ function Footer() {
               Home
             </a>
             <a
-              href="https://tripleten.com"
+              href="https://tripleten.com/referral/"
               target="_blank"
               rel="noreferrer"
               className="footer__link"
