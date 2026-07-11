@@ -8,8 +8,6 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      {" "}
-      {/* <-- Wrap your App here */}
       <App />
     </BrowserRouter>
   </React.StrictMode>,
