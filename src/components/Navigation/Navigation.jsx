@@ -1,21 +1,36 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
+
 import "./Navigation.css";
 
-function Navigation() {
-  const isLoggedIn = false;
+function Navigation({ isLoggedIn }) {
+  const getInputClassName = (type, isActive) => {
+    return `navigation__link navigation__link_type_${type}${
+      isActive ? " navigation__link_active" : ""
+    }`;
+  };
 
   return (
-    <nav className="navigation">
-      <p className="navigation__link navigation__link_type_home navigation__link_active">
+    <div className="navigation__links">
+      <NavLink
+        to="/"
+        className={({ isActive }) => getInputClassName("home", isActive)}
+        end
+      >
         Home
-      </p>
+      </NavLink>
       {isLoggedIn && (
-        <p className="navigation__link navigation__link_type_saved">
+        <NavLink
+          to="/saved-news"
+          className={({ isActive }) => getInputClassName("saved", isActive)}
+        >
           Saved articles
-        </p>
+        </NavLink>
       )}
-      <button className="navigation__sign-in-button">Sign In</button>
-    </nav>
+      <button className="navigation__sign-in-button" type="button">
+        Sign in
+      </button>
+    </div>
   );
 }
 
