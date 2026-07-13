@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import "./Navigation.css";
 
-function Navigation({ isLoggedIn }) {
+function Navigation({ isLoggedIn, handleLoginClick }) {
   const getInputClassName = (type, isActive) => {
     return `navigation__link navigation__link_type_${type}${
       isActive ? " navigation__link_active" : ""
@@ -27,9 +27,15 @@ function Navigation({ isLoggedIn }) {
           Saved articles
         </NavLink>
       )}
-      <button className="navigation__sign-in-button" type="button">
-        Sign in
-      </button>
+      {!isLoggedIn && (
+        <button
+          className="navigation__sign-in-button"
+          type="button"
+          onClick={handleLoginClick}
+        >
+          Sign in
+        </button>
+      )}
     </div>
   );
 }

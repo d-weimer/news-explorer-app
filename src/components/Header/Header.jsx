@@ -5,7 +5,7 @@ import logoWhite from "../../assets/logo-white.svg";
 import logoBlack from "../../assets/logo-black.svg";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, handleLoginClick }) {
   return (
     <header className="header">
       <div className="header__container">
@@ -21,7 +21,10 @@ function Header({ isLoggedIn }) {
             alt="NewsExplorer logo"
           />
         </Link>
-        <Navigation isLoggedIn={isLoggedIn} />
+        <Navigation
+          isLoggedIn={isLoggedIn}
+          handleLoginClick={handleLoginClick}
+        />
       </div>
     </header>
   );
