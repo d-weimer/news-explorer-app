@@ -2,17 +2,14 @@ import React from "react";
 
 import "./Main.css";
 import NewsCardList from "../NewsCardList/NewsCardList.jsx";
+import Preloader from "../Preloader/Preloader.jsx";
 import notFoundIcon from "../../assets/not-found.svg";
 
 function Main({ articles, isLoading, hasNoResults }) {
   return (
     <main className="main-content">
-      {isLoading && (
-        <div className="main-content__status-container">
-          <div className="main-content__preloader"></div>
-          <p className="main-content__status-text">Searching for news...</p>
-        </div>
-      )}
+      {isLoading && <Preloader />}
+
       {hasNoResults && !isLoading && (
         <div className="main-content__status-container">
           <img
@@ -26,6 +23,7 @@ function Main({ articles, isLoading, hasNoResults }) {
           </p>
         </div>
       )}
+
       {!isLoading && !hasNoResults && articles.length > 0 && (
         <div className="main-content__results">
           <h2 className="main-content__title">Search results</h2>
