@@ -4,13 +4,12 @@
   padding: 32px 0;
   box-sizing: border-box;
   display: flex;
-  justify-content: center;
 }
 
 .footer__container {
-  max-width: 1140px;
+  max-width: 1440px;
   width: 100%;
-  padding: 0 16px;
+  margin: 0 104px;
   display: flex;
   justify-content: space-between;
   align-items: center;

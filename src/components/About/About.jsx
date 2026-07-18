@@ -14,13 +14,21 @@ function About() {
           <h2 className="about__title">About the author</h2>
           <div className="about__text-block">
             <p className="about__paragraph">
-              This block describes the project author. Here you should indicate
-              your name, what you do, and which development technologies you
-              know.
-            </p>
-            <p className="about__paragraph">
-              You can also talk about your experience with TripleTen, what you
-              learned there, and how you can help potential customers.
+              Hi, I'm Daniel Weimer! I'm an aspiring Full-stack Software
+              Engineer with a robust background in full-stack development, QA
+              engineering, and technical project management. <br />
+              <br />
+              I love taking complex visual prototypes and design layouts and
+              turning them into clean, scalable applications, whether I'm
+              working with vanilla JavaScript or building modern React apps and
+              Node.js backends. <br />
+              <br />
+              Core Technologies & Skills: <br />- Frontend Development: HTML5,
+              CSS3, JavaScript, React.js, Vite <br />- Backend & Database:
+              Node.js, Express.js, MongoDB, RESTful APIs <br />- Systems &
+              Deployment: Git/GitHub, GCP, Nginx, PM2, Fetch API <br /> -
+              Management & QA: Agile/Scrum sprint lifecycles, Cross-platform
+              regression testing, Bug tracking, Technical project management
             </p>
           </div>
         </div>

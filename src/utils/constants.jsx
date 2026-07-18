@@ -10,7 +10,7 @@ export const mockArticles = [
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800",
   },
   {
-    title: "Deep Sea Expedition Discovers 20 New Marine Species",
+    title: "Deep Sea Expedition",
     source: { name: "National Geographic" },
     publishedAt: "2026-07-09T09:15:00Z",
     description:

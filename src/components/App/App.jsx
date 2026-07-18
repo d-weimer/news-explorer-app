@@ -15,7 +15,7 @@ import LoginModal from "../LoginModal/LoginModal.jsx";
 import { mockArticles, API_KEY } from "../../utils/constants.jsx";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [activeModal, setActiveModal] = useState("");
   const [articles, setArticles] = useState(mockArticles);
 

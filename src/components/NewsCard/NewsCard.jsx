@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./NewsCard.css";
+import defaultCardImage from "../../assets/image-not-found.png";
 
 function NewsCard({ article }) {
+  const [isFallbackActive, setIsFallbackActive] = useState(!article.urlToImage);
+
+  const handleImageError = (e) => {
+    e.target.src = defaultCardImage;
+    setIsFallbackActive(true);
+  };
+
+  const imageClassName = `news-card__image ${
+    isFallbackActive ? "news-card__image_type_fallback" : ""
+  }`;
+
   return (
     <li className="news-card">
       <img
-        className="news-card__image"
-        src={article.urlToImage}
+        className={imageClassName}
+        src={article.urlToImage || defaultCardImage}
         alt={article.title}
+        onError={handleImageError}
       />
       <div className="news-card__action-container">
         <button
