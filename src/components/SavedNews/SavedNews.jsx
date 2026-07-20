@@ -3,13 +3,13 @@ import React from "react";
 import "./SavedNews.css";
 import NewsCardList from "../NewsCardList/NewsCardList.jsx";
 
-function SavedNews({ articles }) {
+function SavedNews({ articles, currentUser = { name: "Name" } }) {
   return (
     <main className="saved-news">
       <section className="saved-news__summary">
         <p className="saved-news__subtitle">Saved articles</p>
         <h1 className="saved-news__title">
-          Elise, you have {articles.length} saved articles
+          {currentUser.name}, you have {articles.length} saved articles
         </h1>
         <p className="saved-news__keywords">
           By keywords:{" "}

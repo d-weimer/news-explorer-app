@@ -1,9 +1,15 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import "./Navigation.css";
+import logoutWhite from "../../assets/logout-white.svg";
+import logoutBlack from "../../assets/logout-black.svg";
 
-function Navigation({ isLoggedIn, handleLoginClick }) {
+function Navigation({
+  isLoggedIn,
+  handleLoginClick,
+  currentUser = { name: "Name" },
+}) {
   const getInputClassName = (type, isActive) => {
     return `navigation__link navigation__link_type_${type}${
       isActive ? " navigation__link_active" : ""
@@ -27,7 +33,26 @@ function Navigation({ isLoggedIn, handleLoginClick }) {
           Saved articles
         </NavLink>
       )}
-      {!isLoggedIn && (
+
+      {isLoggedIn ? (
+        <button
+          className="navigation__user-button"
+          type="button"
+          onClick={() => console.log("Logout function placeholder")}
+        >
+          {currentUser.name}
+          <img
+            className="navigation__logout-icon navigation__logout-icon_theme_white"
+            src={logoutWhite}
+            alt="Logout"
+          />
+          <img
+            className="navigation__logout-icon navigation__logout-icon_theme_black"
+            src={logoutBlack}
+            alt="Logout"
+          />
+        </button>
+      ) : (
         <button
           className="navigation__sign-in-button"
           type="button"
