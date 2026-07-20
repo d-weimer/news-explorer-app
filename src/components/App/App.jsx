@@ -13,35 +13,27 @@ import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 
 import { getNewsArticles } from "../../utils/NewsApi.js";
-import { mockArticles } from "../../utils/constants.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [activeModal, setActiveModal] = useState("");
-  const [articles, setArticles] = useState(mockArticles);
 
+  const [hasSearched, setHasSearched] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [hasNoResults, setHasNoResults] = useState(false);
+  const [searchError, setSearchError] = useState(false);
 
-  const handleRegisterClick = () => {
-    setActiveModal("register");
-  };
-
-  const handleLoginClick = () => {
-    setActiveModal("login");
-  };
-
-  const closeActiveModal = () => {
-    setActiveModal("");
-  };
+  const handleRegisterClick = () => setActiveModal("register");
+  const handleLoginClick = () => setActiveModal("login");
+  const closeActiveModal = () => setActiveModal("");
 
   useEffect(() => {
     if (!activeModal) return;
 
     const handleEscClose = (e) => {
-      if (e.key === "Escape") {
-        closeActiveModal();
-      }
+      if (e.key === "Escape") closeActiveModal();
     };
 
     const handleOverlayClose = (e) => {
@@ -64,24 +56,31 @@ function App() {
 
   const handleSearchSubmit = (keyword) => {
     setIsLoading(true);
+    setHasSearched(true);
     setHasNoResults(false);
+    setSearchError(false);
+    setArticles([]);
+    setVisibleCount(3);
 
     getNewsArticles(keyword)
       .then((data) => {
         if (!data.articles || data.articles.length === 0) {
           setHasNoResults(true);
-          setArticles([]);
         } else {
           setArticles(data.articles);
         }
       })
       .catch((err) => {
-        console.error("Error fetching news:", err);
-        setHasNoResults(true);
+        console.error("News request error:", err);
+        setSearchError(true);
       })
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const handleShowMore = () => {
+    setVisibleCount((prevCount) => prevCount + 3);
   };
 
   return (
@@ -97,12 +96,15 @@ function App() {
                   handleLoginClick={handleLoginClick}
                   isLoggedIn={isLoggedIn}
                 />
-                {/* Connect handleSearchSubmit to onSearch prop */}
                 <SearchForm onSearch={handleSearchSubmit} />
                 <Main
                   articles={articles}
                   isLoading={isLoading}
                   hasNoResults={hasNoResults}
+                  searchError={searchError}
+                  hasSearched={hasSearched}
+                  visibleCount={visibleCount}
+                  handleShowMore={handleShowMore}
                 />
                 <About />
               </div>
