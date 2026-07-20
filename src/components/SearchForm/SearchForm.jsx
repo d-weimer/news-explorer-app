@@ -1,8 +1,23 @@
+import React, { useState } from "react";
+
 import "./SearchForm.css";
 
-function SearchForm() {
+function SearchForm({ onSearch }) {
+  const [keyword, setKeyword] = useState("");
+  const [placeholderText, setPlaceholderText] = useState("Enter topic");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!keyword.trim()) {
+      setPlaceholderText("Please enter a keyword");
+      setKeyword("");
+      return;
+    }
+
+    if (onSearch) {
+      onSearch(keyword.trim());
+    }
   };
 
   return (
@@ -13,12 +28,13 @@ function SearchForm() {
           Find the latest news on any topic and save them in your personal
           account.
         </p>
-        <form className="search-form" onSubmit={handleSubmit}>
+        <form className="search-form" onSubmit={handleSubmit} noValidate>
           <input
             type="text"
             className="search-form__input"
-            placeholder="Enter topic"
-            required
+            placeholder={placeholderText}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
           />
           <button type="submit" className="search-form__button">
             Search

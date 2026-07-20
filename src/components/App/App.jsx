@@ -12,7 +12,8 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 
-import { mockArticles, API_KEY } from "../../utils/constants.jsx";
+import { getNewsArticles } from "../../utils/NewsApi.js";
+import { mockArticles } from "../../utils/constants.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -62,9 +63,25 @@ function App() {
   }, [activeModal]);
 
   const handleSearchSubmit = (keyword) => {
-    fetch(`https://newsapi.org/v2/everything?q=${keyword}&apiKey=${API_KEY}`)
-      .then((res) => res.json())
-      .then((data) => setArticles(data.articles));
+    setIsLoading(true);
+    setHasNoResults(false);
+
+    getNewsArticles(keyword)
+      .then((data) => {
+        if (!data.articles || data.articles.length === 0) {
+          setHasNoResults(true);
+          setArticles([]);
+        } else {
+          setArticles(data.articles);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching news:", err);
+        setHasNoResults(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -80,7 +97,8 @@ function App() {
                   handleLoginClick={handleLoginClick}
                   isLoggedIn={isLoggedIn}
                 />
-                <SearchForm />
+                {/* Connect handleSearchSubmit to onSearch prop */}
+                <SearchForm onSearch={handleSearchSubmit} />
                 <Main
                   articles={articles}
                   isLoading={isLoading}
