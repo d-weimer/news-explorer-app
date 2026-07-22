@@ -15,11 +15,12 @@ import LoginModal from "../LoginModal/LoginModal.jsx";
 import { getNewsArticles } from "../../utils/NewsApi.js";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeModal, setActiveModal] = useState("");
 
   const [hasSearched, setHasSearched] = useState(false);
   const [articles, setArticles] = useState([]);
+  const [savedArticles, setSavedArticles] = useState([]);
   const [visibleCount, setVisibleCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [hasNoResults, setHasNoResults] = useState(false);
@@ -28,6 +29,16 @@ function App() {
   const handleRegisterClick = () => setActiveModal("register");
   const handleLoginClick = () => setActiveModal("login");
   const closeActiveModal = () => setActiveModal("");
+
+  const handleSaveArticle = (articleToSave) => {
+    setSavedArticles((prevSaved) => [...prevSaved, articleToSave]);
+  };
+
+  const handleDeleteArticle = (articleToDelete) => {
+    setSavedArticles((prevSaved) =>
+      prevSaved.filter((item) => item.url !== articleToDelete.url),
+    );
+  };
 
   useEffect(() => {
     if (!activeModal) return;
@@ -105,6 +116,10 @@ function App() {
                   hasSearched={hasSearched}
                   visibleCount={visibleCount}
                   handleShowMore={handleShowMore}
+                  isLoggedIn={isLoggedIn}
+                  savedArticles={savedArticles}
+                  onSaveArticle={handleSaveArticle}
+                  onDeleteArticle={handleDeleteArticle}
                 />
                 <About />
               </div>
@@ -120,7 +135,7 @@ function App() {
                     handleLoginClick={handleLoginClick}
                     isLoggedIn={isLoggedIn}
                   />
-                  <SavedNews articles={articles} />
+                  <SavedNews articles={savedArticles} />
                 </div>
               </ProtectedRoute>
             }

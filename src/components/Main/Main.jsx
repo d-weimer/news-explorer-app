@@ -13,6 +13,10 @@ function Main({
   hasSearched,
   visibleCount,
   handleShowMore,
+  isLoggedIn,
+  savedArticles,
+  onSaveArticle,
+  onDeleteArticle,
 }) {
   if (!hasSearched) {
     return null;
@@ -49,7 +53,13 @@ function Main({
         <div className="main-content__results">
           <h2 className="main-content__title">Search results</h2>
 
-          <NewsCardList articles={articles.slice(0, visibleCount)} />
+          <NewsCardList
+            articles={articles.slice(0, visibleCount)}
+            isLoggedIn={isLoggedIn}
+            savedArticles={savedArticles}
+            onSaveArticle={onSaveArticle}
+            onDeleteArticle={onDeleteArticle}
+          />
 
           {visibleCount < articles.length && (
             <button
