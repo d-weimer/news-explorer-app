@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./Header.css";
@@ -12,8 +13,10 @@ function Header({
   handleLogout,
   currentUser,
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="header">
+    <header className={`header ${isMenuOpen ? "header_menu-open" : ""}`}>
       <div className="header__container">
         <Link to="/" className="header__logo-link">
           <img
@@ -33,6 +36,8 @@ function Header({
           handleRegisterClick={handleRegisterClick}
           handleLogout={handleLogout}
           currentUser={currentUser}
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
         />
       </div>
     </header>
