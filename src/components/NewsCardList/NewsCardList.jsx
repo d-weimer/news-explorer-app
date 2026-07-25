@@ -4,9 +4,10 @@ import "./NewsCardList.css";
 import NewsCard from "../NewsCard/NewsCard.jsx";
 
 function NewsCardList({
-  articles,
+  articles = [],
   isLoggedIn,
-  savedArticles,
+  isSavedNewsPage = false,
+  savedArticles = [],
   onSaveArticle,
   onDeleteArticle,
 }) {
@@ -14,9 +15,10 @@ function NewsCardList({
     <ul className="news-card-list">
       {articles.map((item, index) => (
         <NewsCard
-          key={item.url || index}
+          key={item._id || item.url || index}
           article={item}
           isLoggedIn={isLoggedIn}
+          isSavedNewsPage={isSavedNewsPage}
           savedArticles={savedArticles}
           onSaveArticle={onSaveArticle}
           onDeleteArticle={onDeleteArticle}

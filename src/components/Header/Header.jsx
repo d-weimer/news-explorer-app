@@ -5,7 +5,13 @@ import logoWhite from "../../assets/logo-white.svg";
 import logoBlack from "../../assets/logo-black.svg";
 import Navigation from "../Navigation/Navigation";
 
-function Header({ isLoggedIn, handleLoginClick }) {
+function Header({
+  isLoggedIn,
+  handleLoginClick,
+  handleRegisterClick,
+  handleLogout,
+  currentUser,
+}) {
   return (
     <header className="header">
       <div className="header__container">
@@ -24,6 +30,9 @@ function Header({ isLoggedIn, handleLoginClick }) {
         <Navigation
           isLoggedIn={isLoggedIn}
           handleLoginClick={handleLoginClick}
+          handleRegisterClick={handleRegisterClick}
+          handleLogout={handleLogout}
+          currentUser={currentUser}
         />
       </div>
     </header>

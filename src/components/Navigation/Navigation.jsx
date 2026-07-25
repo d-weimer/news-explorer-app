@@ -8,6 +8,7 @@ import logoutBlack from "../../assets/logout-black.svg";
 function Navigation({
   isLoggedIn,
   handleLoginClick,
+  handleLogout,
   currentUser = { name: "Name" },
 }) {
   const getInputClassName = (type, isActive) => {
@@ -38,9 +39,9 @@ function Navigation({
         <button
           className="navigation__user-button"
           type="button"
-          onClick={() => console.log("Logout function placeholder")}
+          onClick={handleLogout}
         >
-          {currentUser.name}
+          {currentUser?.name || "Name"}
           <img
             className="navigation__logout-icon navigation__logout-icon_theme_white"
             src={logoutWhite}
