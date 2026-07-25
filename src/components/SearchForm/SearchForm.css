@@ -98,3 +98,39 @@
 .search-form__button:hover {
   background-color: #2a64cc;
 }
+
+@media screen and (max-width: 768px) {
+  .search-content {
+    padding-top: 66px;
+    height: 384px;
+  }
+
+  .search-content__container {
+    max-width: 452px;
+  }
+
+  .search-content__title {
+    font-size: 36px;
+    line-height: 40px;
+    margin-bottom: 16px;
+    max-width: 385px;
+    align-self: flex-start;
+  }
+
+  .search-content__subtitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 48px;
+    max-width: 452px;
+  }
+
+  .search-form {
+    max-width: 452px;
+    height: 56px;
+  }
+
+  .search-form__button {
+    width: 160px;
+    height: 56px;
+  }
+}

@@ -56,3 +56,28 @@
   color: #1a1b22;
   margin: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 40px 40px;
+  }
+
+  .about__container {
+    gap: 32px;
+  }
+
+  .about__avatar {
+    width: 232px;
+    height: 232px;
+    padding-top: 21px;
+  }
+
+  .about__content {
+    padding-top: 0;
+  }
+
+  .about__title {
+    font-size: 30px;
+    line-height: 40px;
+  }
+}

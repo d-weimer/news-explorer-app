@@ -6,6 +6,7 @@
   align-items: center;
   min-height: 340px;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .main-content__results {
@@ -23,6 +24,7 @@
   font-weight: 400;
   color: #1a1b22;
   margin: 0 0 64px 0;
+  align-self: flex-start;
 }
 
 .main-content__status-container {
@@ -73,4 +75,21 @@
 
 .main-content__more-button:hover {
   background-color: #e6e8eb;
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding: 40px 40px;
+  }
+
+  .main-content__results {
+    width: 100%;
+    max-width: 688px;
+  }
+
+  .main-content__title {
+    font-size: 30px;
+    line-height: 34px;
+    margin-bottom: 32px;
+  }
 }

@@ -62,12 +62,10 @@ function NewsCard({
         onError={handleImageError}
       />
 
-      {/* Keyword tag on saved articles page */}
       {isSavedNewsPage && keywordTag && (
         <span className="news-card__keyword">{keywordTag}</span>
       )}
 
-      {/* Action button & Tooltip container */}
       <div className="news-card__action-container">
         {isSavedNewsPage ? (
           <>
@@ -105,7 +103,12 @@ function NewsCard({
       <div className="news-card__content">
         <p className="news-card__date">{formatDate(publishedDate)}</p>
         <h3 className="news-card__title">{article.title}</h3>
-        <p className="news-card__text">{descriptionText}</p>
+        <p className="news-card__text">
+          {article.text ||
+            article.description ||
+            article.content ||
+            "No description available."}
+        </p>
         <p className="news-card__source">{sourceName}</p>
       </div>
     </li>

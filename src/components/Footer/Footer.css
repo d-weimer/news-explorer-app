@@ -73,3 +73,13 @@
   height: 20px;
   object-fit: contain;
 }
+
+@media screen and (max-width: 768px) {
+  .saved-news__summary {
+    padding: 40px 40px 32px;
+  }
+
+  .footer__container {
+    margin: 0 40px;
+  }
+}

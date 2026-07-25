@@ -21,7 +21,9 @@ function Navigation({
     <div className="navigation__links">
       <NavLink
         to="/"
-        className={({ isActive }) => getInputClassName("home", isActive)}
+        className={({ isActive }) =>
+          `${getInputClassName("home", isActive)} navigation__link_home`
+        }
         end
       >
         Home
@@ -29,7 +31,9 @@ function Navigation({
       {isLoggedIn && (
         <NavLink
           to="/saved-news"
-          className={({ isActive }) => getInputClassName("saved", isActive)}
+          className={({ isActive }) =>
+            `${getInputClassName("saved", isActive)} navigation__link_saved`
+          }
         >
           Saved articles
         </NavLink>
