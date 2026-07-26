@@ -2,28 +2,40 @@
 
 ## About the project
 
-News Explorer is a React application that allows users to search for articles by keyword using this [News API](https://newsapi.org/). This option requires careful attention to detail and strict guidelines. We’ll provide a detailed Figma layout and instructions similar to those in your earlier projects.
+News Explorer is a React application that allows users to search for news articles by keyword using the [News API](https://newsapi.org/) service. Users can explore recent articles, create a personal account, and save their favorite articles to a dedicated profile page.
 
-## Project requirements
+## Live Demo
 
-Develop a service where users can search for news articles and save them to their profiles.
+- **Deploved Site:** [News Explorer](https://d-weimer.github.io/news-explorer-app/)
 
-### Frontend implementation
+## Tech Stack & Features
 
-The frontend has two main features:
+**Frontend Technologies:**
 
-- When the user enters a keyword in the search bar, the website should send a request to the News API service, find all the relevant articles over the last week, and display these articles on the page.
-- It should display all articles a user saves on a separate page (a protected route).
+- **React:** Component-based UI architecture for building dynamic single-page applications.
+- **React Router (`HashRouter`):** Client-side navigation supporting seamless page transitions and protected routing.
+- **Vite:** Next-generation frontend tooling providing lightning-fast development and optimized build performance.
+- **CSS3:** Custom responsive styling designed to adapt smoothly across mobile, tablet, and desktop viewports.
+- **JavaScript (ES6+):** Modern asynchronous JavaScript handling REST API integrations and state management.
 
-## Backend repository
+**Core Features:**
 
-- https://github.com/d-weimer/news-explorer-backend
+- **Keyword Search:** Send asynchronous requests to the News API to fetch and render relevant articles from the past week.
+- **Card Pagination:** Display results in structured card grids with an expandable "Show more" button.
+- **User Authentication:** Modal-based registration and login flows for custom user accounts.
+- **Saved Articles (Protected Route):** Access restricted pages to manage and remove personal saved news cards.
 
-## React + Vite
+## Running the Project Locally
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+`npm run dev` — Launch the local development server in Vite
 
-Currently, two official plugins are available:
+`npm run build` — Build the production-ready static bundle
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`npm run preview` — Preview the local production build
+
+`npm run deploy` — Build and deploy the application directly to GitHub Pages
+
+## Repositories & Links
+
+- **Backend Repository:** [News Explorer Backend](https://github.com/d-weimer/news-explorer-backend) [UNDER CONSTRUCTION]
+- **Figma Design:** [News Explorer UI Specification](https://www.figma.com/)
