@@ -122,7 +122,7 @@
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 500;
-  line-height: 22px;
+  line-height: 24px;
   color: #b6bcbf;
   cursor: not-allowed;
   transition:
@@ -145,7 +145,7 @@
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  line-height: 17px;
+  line-height: 100%;
   color: #000000;
 }
 
@@ -155,8 +155,8 @@
   padding: 0;
   font-family: "Inter", sans-serif;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 17px;
+  font-weight: 400;
+  line-height: 100%;
   color: #2f71e5;
   cursor: pointer;
   margin-left: 4px;
@@ -164,4 +164,40 @@
 
 .modal__alt-link:hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 600px) {
+  .modal {
+    align-items: flex-end;
+  }
+
+  .modal__content {
+    width: 100%;
+    max-width: 100%;
+    height: calc(100vh - 56px);
+    padding: 16px 16px 20px;
+    border-radius: 16px 16px 0 0;
+    box-sizing: border-box;
+  }
+
+  .modal__close {
+    top: -40px;
+    right: 16px;
+  }
+
+  .modal__close-button {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+  }
+
+  .modal__title {
+    font-size: 24px;
+    line-height: 100%;
+    margin-bottom: 18px;
+  }
+
+  .modal__submit {
+    height: 56px;
+  }
 }

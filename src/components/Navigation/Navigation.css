@@ -250,4 +250,18 @@
     justify-content: center;
     box-sizing: border-box;
   }
+
+  .navigation__links_mobile_open .navigation__logout-icon_theme_white,
+  .saved-news-page
+    .navigation__links_mobile_open
+    .navigation__logout-icon_theme_white {
+    display: block !important;
+  }
+
+  .navigation__links_mobile_open .navigation__logout-icon_theme_black,
+  .saved-news-page
+    .navigation__links_mobile_open
+    .navigation__logout-icon_theme_black {
+    display: none !important;
+  }
 }

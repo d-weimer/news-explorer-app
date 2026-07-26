@@ -93,3 +93,27 @@
     margin-bottom: 32px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .main-content {
+    padding: 32px 16px 24px;
+  }
+
+  .main-content__results {
+    max-width: 288px;
+    width: 100%;
+  }
+
+  .main-content__title {
+    font-size: 30px;
+    line-height: 34px;
+    margin-bottom: 58px;
+  }
+
+  .main-content__more-button {
+    width: 100%;
+    max-width: 288px;
+    height: 56px;
+    margin-top: 16px;
+  }
+}
