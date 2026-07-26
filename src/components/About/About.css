@@ -81,3 +81,40 @@
     line-height: 40px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .about {
+    padding: 32px 16px 128px;
+  }
+
+  .about__container {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 288px;
+    width: 100%;
+  }
+
+  .about__avatar {
+    width: 272px;
+    height: 272px;
+    padding-top: 0;
+  }
+
+  .about__content {
+    padding-top: 0;
+    max-width: 288px;
+    width: 100%;
+  }
+
+  .about__title {
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: 16px;
+  }
+
+  .about__paragraph {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
