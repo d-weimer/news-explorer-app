@@ -39,3 +39,8 @@ News Explorer is a React application that allows users to search for news articl
 
 - **Backend Repository:** [News Explorer Backend](https://github.com/d-weimer/news-explorer-backend) [UNDER CONSTRUCTION]
 - **Figma Design:** [News Explorer UI Specification](https://www.figma.com/)
+
+## Project Pitch Video
+
+Check out [this video](https://drive.google.com/file/d/1a7KIYyAlOOYN2fHRvkl7Kg7vdh24B3jC/view?usp=sharing), where I describe my
+project and some challenges I faced while building it.
