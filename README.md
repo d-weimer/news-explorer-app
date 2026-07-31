@@ -2,27 +2,45 @@
 
 ## About the project
 
-News Explorer is a React application that allows users to search for articles by keyword using this [News API](https://newsapi.org/). This option requires careful attention to detail and strict guidelines. We’ll provide a detailed Figma layout and instructions similar to those in your earlier projects.
+News Explorer is a React application that allows users to search for news articles by keyword using the [News API](https://newsapi.org/) service. Users can explore recent articles, create a personal account, and save their favorite articles to a dedicated profile page.
 
-## Project requirements
+## Live Demo
 
-Develop a service where users can search for news articles and save them to their profiles.
+- **Deploved Site:** [News Explorer](https://d-weimer.github.io/news-explorer-app/)
 
-### Frontend implementation
+## Tech Stack & Features
 
-The frontend has two main features:
+**Frontend Technologies:**
 
-- When the user enters a keyword in the search bar, the website should send a request to the News API service, find all the relevant articles over the last week, and display these articles on the page.
-- It should display all articles a user saves on a separate page (a protected route).
+- **React:** Component-based UI architecture for building dynamic single-page applications.
+- **React Router (`HashRouter`):** Client-side navigation supporting seamless page transitions and protected routing.
+- **Vite:** Next-generation frontend tooling providing lightning-fast development and optimized build performance.
+- **CSS3:** Custom responsive styling designed to adapt smoothly across mobile, tablet, and desktop viewports.
+- **JavaScript (ES6+):** Modern asynchronous JavaScript handling REST API integrations and state management.
 
-Project resource links:
+**Core Features:**
 
-- 🎨 [Figma design for News Explorer](figma.com/file/3ottwMEhlBt95Dbn8dw1NH/Your-Final-Project?type=design&node-id=0-1&mode=design&t=n8iPbRbVKSAS2dCI-0)
-- 🔤 [Fonts for News Explorer](https://code.s3.yandex.net/web-developer/diploma/final-project_fonts_latin.zip)
+- **Keyword Search:** Send asynchronous requests to the News API to fetch and render relevant articles from the past week.
+- **Card Pagination:** Display results in structured card grids with an expandable "Show more" button.
+- **User Authentication:** Modal-based registration and login flows for custom user accounts.
+- **Saved Articles (Protected Route):** Access restricted pages to manage and remove personal saved news cards.
 
-### Backend implementation
+## Running the Project Locally
 
-The backend will have two components:
+`npm run dev` — Launch the local development server in Vite
 
-- User authentication and authorization
-- Saving and deleting articles
+`npm run build` — Build the production-ready static bundle
+
+`npm run preview` — Preview the local production build
+
+`npm run deploy` — Build and deploy the application directly to GitHub Pages
+
+## Repositories & Links
+
+- **Backend Repository:** [News Explorer Backend](https://github.com/d-weimer/news-explorer-backend) [UNDER CONSTRUCTION]
+- **Figma Design:** [News Explorer UI Specification](https://www.figma.com/)
+
+## Project Pitch Video
+
+Check out [this video](https://drive.google.com/file/d/1a7KIYyAlOOYN2fHRvkl7Kg7vdh24B3jC/view?usp=sharing), where I describe my
+project and some challenges I faced while building it.
