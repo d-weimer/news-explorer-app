@@ -1,4 +1,4 @@
-export const getItems = (token) => {
+export const getItems = () => {
   return new Promise((resolve) => {
     const savedArticles =
       JSON.parse(localStorage.getItem("mockSavedArticles")) || [];
@@ -30,7 +30,7 @@ export const addItem = (article, token, keyword = "General") => {
   });
 };
 
-export const removeItem = (articleId, token) => {
+export const removeItem = (articleId) => {
   return new Promise((resolve) => {
     const savedArticles =
       JSON.parse(localStorage.getItem("mockSavedArticles")) || [];

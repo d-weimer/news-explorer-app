@@ -6,7 +6,7 @@ export const registerUser = ({ email, password, name }) => {
       email: email,
     };
 
-    localStorage.setItem("mockUser", JSON.stringify(newUser));
+    localStorage.setItem("mockUser", JSON.stringify({ ...newUser, password }));
 
     resolve({ data: newUser });
   });
@@ -14,7 +14,9 @@ export const registerUser = ({ email, password, name }) => {
 
 export const authorizeUser = ({ email, password }) => {
   return new Promise((resolve) => {
-    resolve({ token: "fake-jwt-token-xyz789" });
+    if (email && password) {
+      resolve({ token: "fake-jwt-token-xyz789" });
+    }
   });
 };
 
@@ -26,8 +28,10 @@ export const getUserInfo = (token) => {
       email: "user@example.com",
     };
 
-    resolve({
-      data: savedUser,
-    });
+    if (token) {
+      resolve({
+        data: savedUser,
+      });
+    }
   });
 };
