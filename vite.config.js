@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/news-explorer-app/",
+  base: "/",
   server: {
     port: 3000,
   },

@@ -1,5 +1,5 @@
 export const BASE_URL =
-  process.env.NODE_ENV === "production"
+  import.meta.env.MODE === "production"
     ? "https://api.yourdomain.com"
     : "http://localhost:3000";
 
