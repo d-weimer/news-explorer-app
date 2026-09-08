@@ -240,6 +240,7 @@ function App() {
                     handleLoginClick={handleLoginClick}
                     isLoggedIn={isLoggedIn}
                     handleLogout={handleLogout}
+                    currentUser={currentUser}
                   />
                   <SearchForm onSearch={handleSearchSubmit} />
                   <Main
@@ -269,6 +270,7 @@ function App() {
                       handleLoginClick={handleLoginClick}
                       isLoggedIn={isLoggedIn}
                       handleLogout={handleLogout}
+                      currentUser={currentUser}
                     />
                     <SavedNews
                       articles={savedArticles}
