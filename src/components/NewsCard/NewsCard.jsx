@@ -14,7 +14,6 @@ function NewsCard({
 }) {
   const imageUrl = article.urlToImage || article.image;
   const publishedDate = article.publishedAt || article.date;
-  const descriptionText = article.description || article.text;
   const sourceName =
     typeof article.source === "object" ? article.source?.name : article.source;
   const keywordTag = article.keyword || article.tag;
@@ -22,7 +21,12 @@ function NewsCard({
   const [isFallbackActive, setIsFallbackActive] = useState(!imageUrl);
   const [isHovered, setIsHovered] = useState(false);
 
-  const isSaved = savedArticles.some((saved) => saved.url === article.url);
+  const isSaved = savedArticles.some(
+    (saved) =>
+      (saved.url && saved.url === article.url) ||
+      (saved.link && saved.link === (article.url || article.link)) ||
+      (saved._id && saved._id === article._id),
+  );
 
   const handleImageError = (e) => {
     e.target.src = defaultCardImage;
@@ -31,7 +35,10 @@ function NewsCard({
 
   const handleBookmarkClick = (e) => {
     e.stopPropagation();
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      onSaveArticle?.(article);
+      return;
+    }
 
     if (isSaved) {
       onDeleteArticle?.(article);
