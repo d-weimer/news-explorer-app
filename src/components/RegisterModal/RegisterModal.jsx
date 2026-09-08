@@ -31,7 +31,7 @@ function RegisterModal({ isOpen, onCloseModal, openLoginModal, onRegister }) {
       onSubmit={handleSubmit}
       altButtonText="Sign in"
       onAltClick={openLoginModal}
-      isSubmitDisabled={!isValid}
+      isFormValid={isValid}
       altButton={
         <p className="modal__alt-text">
           or
