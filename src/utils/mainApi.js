@@ -1,6 +1,6 @@
 export const BASE_URL =
   import.meta.env.MODE === "production"
-    ? "https://api.yourdomain.com"
+    ? "https://api.djw-newsexplorer.jumpingcrab.com"
     : "http://localhost:3000";
 
 const checkResponse = (res) => {
