@@ -39,12 +39,14 @@ function LoginModal({ isOpen, onCloseModal, openRegisterModal, onLogin }) {
       <label className="modal__label">
         Email
         <input
+          id="login-email"
           type="email"
           name="email"
           className="modal__input"
           placeholder="Enter email"
           value={values.email || ""}
           onChange={handleChange}
+          autoComplete="email"
           required
         />
         <span className="modal__error">{errors.email}</span>
@@ -53,12 +55,14 @@ function LoginModal({ isOpen, onCloseModal, openRegisterModal, onLogin }) {
       <label className="modal__label">
         Password
         <input
+          id="login-password"
           type="password"
           name="password"
           className="modal__input"
           placeholder="Enter password"
           value={values.password || ""}
           onChange={handleChange}
+          autoComplete="current-password"
           minLength="8"
           required
         />

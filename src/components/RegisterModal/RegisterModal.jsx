@@ -46,12 +46,14 @@ function RegisterModal({ isOpen, onCloseModal, openLoginModal, onRegister }) {
       <label className="modal__label">
         Email
         <input
+          id="register-email"
           type="email"
           name="email"
           className="modal__input"
           placeholder="Enter email"
           value={values.email || ""}
           onChange={handleChange}
+          autoComplete="email"
           required
         />
         <span className="modal__error">{errors.email}</span>
@@ -60,12 +62,14 @@ function RegisterModal({ isOpen, onCloseModal, openLoginModal, onRegister }) {
       <label className="modal__label">
         Password
         <input
+          id="register-password"
           type="password"
           name="password"
           className="modal__input"
           placeholder="Enter password"
           value={values.password || ""}
           onChange={handleChange}
+          autoComplete="new-password"
           minLength="8"
           required
         />
@@ -75,12 +79,14 @@ function RegisterModal({ isOpen, onCloseModal, openLoginModal, onRegister }) {
       <label className="modal__label">
         Username
         <input
+          id="register-username"
           type="text"
           name="username"
           className="modal__input"
           placeholder="Enter your username"
           value={values.username || ""}
           onChange={handleChange}
+          autoComplete="username"
           minLength="2"
           maxLength="30"
           required

@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import "./SearchForm.css";
 
 function SearchForm({ onSearch }) {
@@ -31,10 +32,13 @@ function SearchForm({ onSearch }) {
         </p>
         <form className="search-form" onSubmit={handleSubmit} noValidate>
           <input
+            id="search-input"
+            name="search"
             type="text"
             className="search-form__input"
             placeholder={placeholderText}
             value={keyword}
+            autoComplete="off"
             onChange={(e) => {
               setKeyword(e.target.value);
               if (placeholderText !== "Enter topic") {
