@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./Main.css";
 import NewsCardList from "../NewsCardList/NewsCardList.jsx";
 import Preloader from "../Preloader/Preloader.jsx";

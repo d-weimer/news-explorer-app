@@ -14,12 +14,13 @@ function About() {
           <h2 className="about__title">About the author</h2>
           <div className="about__text-block">
             <p className="about__paragraph">
-              Hi, I'm Daniel Weimer! I'm an aspiring Full-stack Software
-              Engineer with a robust background in full-stack development, QA
-              engineering, and technical project management. <br />
+              Hi, I&apos;m Daniel Weimer! I&apos;m an aspiring Full-stack
+              Software Engineer with a robust background in full-stack
+              development, QA engineering, and technical project management.{" "}
+              <br />
               <br />
               I love taking complex visual prototypes and design layouts and
-              turning them into clean, scalable applications, whether I'm
+              turning them into clean, scalable applications, whether I&apos;m
               working with vanilla JavaScript or building modern React apps and
               Node.js backends. <br />
               <br />

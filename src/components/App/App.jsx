@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
@@ -50,6 +50,13 @@ function App() {
     setAuthError("");
   };
 
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    navigate("/");
+  }, [navigate]);
+
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
@@ -64,7 +71,7 @@ function App() {
           handleLogout();
         });
     }
-  }, []);
+  }, [handleLogout]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -116,13 +123,6 @@ function App() {
         );
       })
       .finally(() => setIsSubmitLoading(false));
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwt");
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    navigate("/");
   };
 
   const handleSaveArticle = (articleToSave) => {
