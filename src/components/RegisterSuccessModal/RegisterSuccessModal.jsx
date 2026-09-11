@@ -1,5 +1,3 @@
-import React from "react";
-
 function RegisterSuccessModal({ isOpen, onCloseModal, openLoginModal }) {
   return (
     <div className={`modal ${isOpen ? "modal__opened" : ""}`}>

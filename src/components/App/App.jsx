@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
 import Header from "../Header/Header.jsx";
@@ -13,14 +13,16 @@ import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import RegisterSuccessModal from "../RegisterSuccessModal/RegisterSuccessModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 
-import { getNewsArticles } from "../../utils/NewsApi.js";
-import { registerUser, authorizeUser, getUserInfo } from "../../utils/auth.js";
-import { getItems, addItem, removeItem } from "../../utils/api.js";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
+import { getNewsArticles } from "../../utils/newsApi.js";
+import * as mainApi from "../../utils/mainApi.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [activeModal, setActiveModal] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
   const [hasSearched, setHasSearched] = useState(false);
   const [articles, setArticles] = useState([]);
@@ -31,27 +33,52 @@ function App() {
   const [searchError, setSearchError] = useState(false);
   const [currentKeyword, setCurrentKeyword] = useState("");
 
-  const handleRegisterClick = () => setActiveModal("register");
-  const handleLoginClick = () => setActiveModal("login");
-  const closeActiveModal = () => setActiveModal("");
+  const navigate = useNavigate();
+
+  const handleRegisterClick = () => {
+    setAuthError("");
+    setActiveModal("register");
+  };
+
+  const handleLoginClick = () => {
+    setAuthError("");
+    setActiveModal("login");
+  };
+
+  const closeActiveModal = () => {
+    setActiveModal("");
+    setAuthError("");
+  };
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    navigate("/");
+  }, [navigate]);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      getUserInfo(jwt)
+      mainApi
+        .getUserInfo(jwt)
         .then((res) => {
           setIsLoggedIn(true);
           setCurrentUser(res.data || res);
         })
-        .catch((err) => console.error("Token validation error:", err));
+        .catch((err) => {
+          console.error("Token validation error:", err);
+          handleLogout();
+        });
     }
-  }, []);
+  }, [handleLogout]);
 
   useEffect(() => {
     if (isLoggedIn) {
       const jwt = localStorage.getItem("jwt");
-      getItems(jwt)
-        .then((data) => setSavedArticles(data))
+      mainApi
+        .getSavedArticles(jwt)
+        .then((data) => setSavedArticles(data.data || data))
         .catch((err) => console.error("Failed to load saved articles:", err));
     } else {
       setSavedArticles([]);
@@ -59,42 +86,67 @@ function App() {
   }, [isLoggedIn]);
 
   function handleRegister({ email, password, name }) {
-    registerUser({ email, password, name })
+    setIsSubmitLoading(true);
+    setAuthError("");
+    mainApi
+      .register({ email, password, name })
       .then(() => {
         setActiveModal("success");
       })
       .catch((err) => {
         console.error("Registration error:", err);
-      });
+        setAuthError(typeof err === "string" ? err : "Registration failed");
+      })
+      .finally(() => setIsSubmitLoading(false));
   }
 
   const handleLogin = ({ email, password }) => {
-    authorizeUser({ email, password })
+    setIsSubmitLoading(true);
+    setAuthError("");
+    mainApi
+      .authorize({ email, password })
       .then((res) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
           closeActiveModal();
-          return getUserInfo(res.token);
+          return mainApi.getUserInfo(res.token);
         }
       })
       .then((userRes) => {
         if (userRes) setCurrentUser(userRes.data || userRes);
       })
-      .catch((err) => console.error("Login error:", err));
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("jwt");
-    setIsLoggedIn(false);
-    setCurrentUser(null);
+      .catch((err) => {
+        console.error("Login error:", err);
+        setAuthError(
+          typeof err === "string" ? err : "Incorrect email or password",
+        );
+      })
+      .finally(() => setIsSubmitLoading(false));
   };
 
   const handleSaveArticle = (articleToSave) => {
+    if (!isLoggedIn) {
+      handleRegisterClick();
+      return;
+    }
+
     const jwt = localStorage.getItem("jwt");
-    addItem(articleToSave, jwt, currentKeyword)
+    const formattedArticle = {
+      keyword: currentKeyword || "General",
+      title: articleToSave.title,
+      text: articleToSave.description || articleToSave.text,
+      date: articleToSave.publishedAt || articleToSave.date,
+      source: articleToSave.source?.name || articleToSave.source,
+      link: articleToSave.url || articleToSave.link,
+      image: articleToSave.urlToImage || articleToSave.image,
+    };
+
+    mainApi
+      .saveArticle(formattedArticle, jwt)
       .then((savedCard) => {
-        setSavedArticles((prevSaved) => [...prevSaved, savedCard]);
+        const cardData = savedCard.data || savedCard;
+        setSavedArticles((prevSaved) => [...prevSaved, cardData]);
       })
       .catch((err) => console.error("Save article error:", err));
   };
@@ -103,16 +155,17 @@ function App() {
     const jwt = localStorage.getItem("jwt");
     const targetCard = savedArticles.find(
       (item) =>
-        item.url === articleToDelete.url || item._id === articleToDelete._id,
+        item.link === articleToDelete.url ||
+        item.link === articleToDelete.link ||
+        item._id === articleToDelete._id,
     );
     const targetId = targetCard ? targetCard._id : articleToDelete._id;
 
-    removeItem(targetId, jwt)
+    mainApi
+      .deleteArticle(targetId, jwt)
       .then(() => {
         setSavedArticles((prevSaved) =>
-          prevSaved.filter(
-            (item) => item.url !== articleToDelete.url && item._id !== targetId,
-          ),
+          prevSaved.filter((item) => item._id !== targetId),
         );
       })
       .catch((err) => console.error("Delete article error:", err));
@@ -127,7 +180,7 @@ function App() {
 
     const handleOverlayClose = (e) => {
       if (
-        e.target.classList.contains("modal__opened") ||
+        e.target.classList.contains("modal_opened") ||
         e.target.classList.contains("modal")
       ) {
         closeActiveModal();
@@ -174,43 +227,14 @@ function App() {
   };
 
   return (
-    <div className="page">
-      <div className="page__content">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="home-page">
-                <Header
-                  handleRegisterClick={handleRegisterClick}
-                  handleLoginClick={handleLoginClick}
-                  isLoggedIn={isLoggedIn}
-                  handleLogout={handleLogout}
-                  currentUser={currentUser}
-                />
-                <SearchForm onSearch={handleSearchSubmit} />
-                <Main
-                  articles={articles}
-                  isLoading={isLoading}
-                  hasNoResults={hasNoResults}
-                  searchError={searchError}
-                  hasSearched={hasSearched}
-                  visibleCount={visibleCount}
-                  handleShowMore={handleShowMore}
-                  isLoggedIn={isLoggedIn}
-                  savedArticles={savedArticles}
-                  onSaveArticle={handleSaveArticle}
-                  onDeleteArticle={handleDeleteArticle}
-                />
-                <About />
-              </div>
-            }
-          />
-          <Route
-            path="/saved-news"
-            element={
-              <ProtectedRoute isLoggedIn={isLoggedIn}>
-                <div className="saved-news-page">
+    <CurrentUserContext.Provider value={{ currentUser, isLoggedIn }}>
+      <div className="page">
+        <div className="page__content">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div className="home-page">
                   <Header
                     handleRegisterClick={handleRegisterClick}
                     handleLoginClick={handleLoginClick}
@@ -218,37 +242,71 @@ function App() {
                     handleLogout={handleLogout}
                     currentUser={currentUser}
                   />
-                  <SavedNews
-                    articles={savedArticles}
-                    currentUser={currentUser}
+                  <SearchForm onSearch={handleSearchSubmit} />
+                  <Main
+                    articles={articles}
+                    isLoading={isLoading}
+                    hasNoResults={hasNoResults}
+                    searchError={searchError}
+                    hasSearched={hasSearched}
+                    visibleCount={visibleCount}
+                    handleShowMore={handleShowMore}
                     isLoggedIn={isLoggedIn}
+                    savedArticles={savedArticles}
+                    onSaveArticle={handleSaveArticle}
                     onDeleteArticle={handleDeleteArticle}
                   />
+                  <About />
                 </div>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-        <Footer />
+              }
+            />
+            <Route
+              path="/saved-news"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <div className="saved-news-page">
+                    <Header
+                      handleRegisterClick={handleRegisterClick}
+                      handleLoginClick={handleLoginClick}
+                      isLoggedIn={isLoggedIn}
+                      handleLogout={handleLogout}
+                      currentUser={currentUser}
+                    />
+                    <SavedNews
+                      articles={savedArticles}
+                      isLoggedIn={isLoggedIn}
+                      onDeleteArticle={handleDeleteArticle}
+                    />
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+          <Footer />
+        </div>
+        <RegisterModal
+          isOpen={activeModal === "register"}
+          onCloseModal={closeActiveModal}
+          openLoginModal={handleLoginClick}
+          onRegister={handleRegister}
+          authError={authError}
+          isLoading={isSubmitLoading}
+        />
+        <RegisterSuccessModal
+          isOpen={activeModal === "success"}
+          onCloseModal={closeActiveModal}
+          openLoginModal={handleLoginClick}
+        />
+        <LoginModal
+          isOpen={activeModal === "login"}
+          onCloseModal={closeActiveModal}
+          openRegisterModal={handleRegisterClick}
+          onLogin={handleLogin}
+          authError={authError}
+          isLoading={isSubmitLoading}
+        />
       </div>
-      <RegisterModal
-        isOpen={activeModal === "register"}
-        onCloseModal={closeActiveModal}
-        openLoginModal={handleLoginClick}
-        onRegister={handleRegister}
-      />
-      <RegisterSuccessModal
-        isOpen={activeModal === "success"}
-        onCloseModal={closeActiveModal}
-        openLoginModal={handleLoginClick}
-      />
-      <LoginModal
-        isOpen={activeModal === "login"}
-        onCloseModal={closeActiveModal}
-        openRegisterModal={handleRegisterClick}
-        onLogin={handleLogin}
-      />
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 

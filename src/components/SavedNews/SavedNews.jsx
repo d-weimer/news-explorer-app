@@ -1,14 +1,12 @@
-import React from "react";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import "./SavedNews.css";
 import NewsCardList from "../NewsCardList/NewsCardList.jsx";
 
-function SavedNews({
-  articles = [],
-  currentUser = { name: "Name" },
-  isLoggedIn = false,
-  onDeleteArticle,
-}) {
+function SavedNews({ articles = [], isLoggedIn = false, onDeleteArticle }) {
+  const { currentUser } = useContext(CurrentUserContext);
+
   const capitalizeKeyword = (str) => {
     if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1);

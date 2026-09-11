@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import "./NewsCard.css";
 import defaultCardImage from "../../assets/image-not-found.png";
@@ -14,15 +14,20 @@ function NewsCard({
 }) {
   const imageUrl = article.urlToImage || article.image;
   const publishedDate = article.publishedAt || article.date;
-  const descriptionText = article.description || article.text;
   const sourceName =
     typeof article.source === "object" ? article.source?.name : article.source;
   const keywordTag = article.keyword || article.tag;
+  const articleUrl = article.url || article.link;
 
   const [isFallbackActive, setIsFallbackActive] = useState(!imageUrl);
   const [isHovered, setIsHovered] = useState(false);
 
-  const isSaved = savedArticles.some((saved) => saved.url === article.url);
+  const isSaved = savedArticles.some(
+    (saved) =>
+      (saved.url && saved.url === article.url) ||
+      (saved.link && saved.link === (article.url || article.link)) ||
+      (saved._id && saved._id === article._id),
+  );
 
   const handleImageError = (e) => {
     e.target.src = defaultCardImage;
@@ -31,7 +36,10 @@ function NewsCard({
 
   const handleBookmarkClick = (e) => {
     e.stopPropagation();
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      onSaveArticle?.(article);
+      return;
+    }
 
     if (isSaved) {
       onDeleteArticle?.(article);
@@ -55,16 +63,35 @@ function NewsCard({
 
   return (
     <li className="news-card">
-      <img
-        className={imageClassName}
-        src={imageUrl || defaultCardImage}
-        alt={article.title || "Article image"}
-        onError={handleImageError}
-      />
+      <a
+        className="news-card__link"
+        href={articleUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className={imageClassName}
+          src={imageUrl || defaultCardImage}
+          alt={article.title || "Article image"}
+          onError={handleImageError}
+        />
 
-      {isSavedNewsPage && keywordTag && (
-        <span className="news-card__keyword">{keywordTag}</span>
-      )}
+        {isSavedNewsPage && keywordTag && (
+          <span className="news-card__keyword">{keywordTag}</span>
+        )}
+
+        <div className="news-card__content">
+          <p className="news-card__date">{formatDate(publishedDate)}</p>
+          <h3 className="news-card__title">{article.title}</h3>
+          <p className="news-card__text">
+            {article.text ||
+              article.description ||
+              article.content ||
+              "No description available."}
+          </p>
+          <p className="news-card__source">{sourceName}</p>
+        </div>
+      </a>
 
       <div className="news-card__action-container">
         {isSavedNewsPage ? (
@@ -98,18 +125,6 @@ function NewsCard({
             />
           </>
         )}
-      </div>
-
-      <div className="news-card__content">
-        <p className="news-card__date">{formatDate(publishedDate)}</p>
-        <h3 className="news-card__title">{article.title}</h3>
-        <p className="news-card__text">
-          {article.text ||
-            article.description ||
-            article.content ||
-            "No description available."}
-        </p>
-        <p className="news-card__source">{sourceName}</p>
       </div>
     </li>
   );
