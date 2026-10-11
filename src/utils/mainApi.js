@@ -1,7 +1,7 @@
 export const BASE_URL =
   import.meta.env.MODE === "production"
-    ? "https://api.djw-newsexplorer.jumpingcrab.com"
-    : "http://localhost:3001";
+    ? "https://danielweimer.net/api/news-explorer"
+    : "http://localhost:3000";
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -69,6 +69,16 @@ export const deleteArticle = (articleId, token) => {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+};
+
+export const getNews = (keyword, token) => {
+  return fetch(`${BASE_URL}/news?q=${encodeURIComponent(keyword)}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
   }).then(checkResponse);
 };

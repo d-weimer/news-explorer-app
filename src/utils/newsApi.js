@@ -2,7 +2,7 @@ import { API_KEY } from "./constants";
 
 const BASE_URL =
   import.meta.env.MODE === "production"
-    ? "https://nomoreparties.co/news/v2/everything"
+    ? "https://danielweimer.net/api/news-explorer/news"
     : "https://nomoreparties.co/news/v2/everything";
 
 const checkResponse = (res) => {
